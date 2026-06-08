@@ -1,0 +1,7 @@
+﻿channel,servo_spec,travel_deg,left_limit_us,right_limit_us,left_safe_us,right_safe_us,recommended_position,notes
+CH0,20kg,180,333,2949,500,2750,elbow,20kg 180deg servo
+CH1,25kg,180,333,2954,500,2750,shoulder,25kg 180deg servo
+CH2,20kg,180,333,2954,500,2750,wrist_pitch,20kg 180deg servo
+CH3,20kg,180,333,2949,500,2750,wrist_rotate,20kg 180deg servo
+CH4,20kg,180,333,2958,500,2750,gripper,20kg 180deg servo
+CH5,30kg,270,333,2949,500,2750,base,30kg 270deg servo

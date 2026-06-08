@@ -1,0 +1,41 @@
+points:
+  base:
+  - - 0.0
+    - 127.0
+  - - 45.0
+    - 172.0
+  shoulder:
+  - - 50.0
+    - 80.0
+  - - 70.0
+    - 105.0
+  - - 90.0
+    - 120.0
+  - - 110.0
+    - 140.0
+  elbow:
+  - - 40.0
+    - 120.0
+  - - 65.0
+    - 105.0
+  - - 90.0
+    - 85.0
+  - - 115.0
+    - 55.0
+  wrist_pitch:
+  - - -45.0
+    - 135.0
+  - - 0.0
+    - 90.0
+offsets:
+  base: 127.0
+  shoulder: 17.5
+  elbow: 144.0
+  wrist_pitch: 90.0
+signs:
+  base: 1.0
+  shoulder: 1.25
+  elbow: -0.6
+  wrist_pitch: -1.0
+calibrated_at: '2026-06-05T15:15:59'
+note: 由 joint_calib.py merge 生成（多点分段线性）；config_v2 优先用 points

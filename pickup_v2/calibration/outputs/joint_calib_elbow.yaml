@@ -1,0 +1,11 @@
+joint: elbow
+joint_id: 2
+offset_deg: 163.0
+sign: -1
+calibration_points:
+- geom_deg: 0.0
+  servo_deg: 163.0
+- geom_deg: 90.0
+  servo_deg: 85.0
+fit_residual_deg: 12.0
+calibrated_at: '2026-06-03T21:41:09'

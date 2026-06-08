@@ -1,0 +1,7 @@
+﻿joint_id,channel,servo_type,travel_deg,min_safe_angle_deg,max_safe_angle_deg,zero_angle_deg,center_pulse_us,min_pulse_us,max_pulse_us,notes
+base,0,TD-8120MG,270,,,,,,,
+shoulder,1,TD-8120MG,180,,,,,,,
+elbow,2,TD-8120MG,180,,,,,,,
+wrist_pitch,3,TD-8120MG,180,,,,,,,
+wrist_rotate,4,TD-8120MG,180,,,,,,,
+gripper,5,TD-8120MG,180,,,,,,,

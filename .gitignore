@@ -1,0 +1,78 @@
+# Word temporary files
+~$*.docx
+~$*.doc
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# IDE
+.vscode/
+
+# Renesas e2studio / GCC build artifacts
+Debug/
+Release/
+*.elf
+*.hex
+*.bin
+*.map
+*.lst
+*.o
+*.d
+*.srec
+*.rpd
+*.sbd
+*.o.in
+*.elf.in
+
+# FSP auto-generated (can regenerate from configuration.xml)
+ra/
+ra_gen/
+ra_cfg/
+
+# Eclipse / e2studio metadata
+.settings/
+.externalToolBuilders/
+*.launch
+
+# Temporary / log files
+*.tmp
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# YOLO / PyTorch model weights
+*.pt
+*.onnx
+
+# Training runs — keep curves & metrics, exclude weights
+vision/runs/**/weights/
+
+# ===== Privacy / internal files =====
+
+# Claude Code AI assistant config & memory
+CLAUDE.md
+.claude/
+
+# Competition admin documents (contain personal info)
+competition/
+计算机设计大赛/
+*.pdf
+*.pptx
+generate_ppt.py
+
+# Docs with personal names or competition IDs
+docs/技术方案设计书.md
+docs/项目关键事实.md
+docs/答辩PPT大纲_N183.md
+docs/答辩脚本与模拟问答_N183.md
+
+# Original hash-named photos (renamed copies in images/)
+1d77ada9fb3b713167b3a349c7c38a58.png
+2de39cf0795659ac599a0954041bf2c2.png
+8b15972a07de5fb3246a7016771d917e.png
+ba6b3aa8cf7c336ffba6c4d8021acdb5.png

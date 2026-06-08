@@ -1,0 +1,12 @@
+# 草莓成熟度检测数据集配置
+# 3类：成熟 / 半成熟 / 未熟
+
+path: D:/草莓数据/merged_final
+train: images/train
+val: images/val
+
+nc: 3
+names:
+  0: ripe        # 成熟（红色）→ MCU 指令 A
+  1: semi_ripe   # 半成熟（转色）→ MCU 指令 B
+  2: unripe      # 未熟（绿/白）→ MCU 指令 C

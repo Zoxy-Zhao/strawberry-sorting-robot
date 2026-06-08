@@ -1,0 +1,11 @@
+joint: wrist_pitch
+joint_id: 3
+offset_deg: 90.0
+sign: -1
+calibration_points:
+- geom_deg: 0.0
+  servo_deg: 90.0
+- geom_deg: -45.0
+  servo_deg: 135.0
+fit_residual_deg: 0.0
+calibrated_at: '2026-06-03T21:44:22'

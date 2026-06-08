@@ -1,0 +1,11 @@
+joint: shoulder
+joint_id: 1
+offset_deg: 37.0
+sign: 1
+calibration_points:
+- geom_deg: 0.0
+  servo_deg: 37.0
+- geom_deg: 45.0
+  servo_deg: 73.0
+fit_residual_deg: 9.0
+calibrated_at: '2026-06-03T21:34:48'
