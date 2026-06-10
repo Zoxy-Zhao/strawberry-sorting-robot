@@ -4,7 +4,7 @@
 
 ## 1. 当前起点
 
-当前主工程：`D:\e2studio_test\Robotic_arm`（FSP 6.3.0，裸机）
+当前主工程：`e2studio 工程 Robotic_arm`（FSP 6.3.0，裸机）
 
 已实现能力：
 

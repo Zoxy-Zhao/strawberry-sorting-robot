@@ -4,7 +4,7 @@
 
 ## 隔离原则
 
-本目录下的所有内容**完全独立于现有的 `vision/pi/` 和 `D:\e2studio_test\Robotic_arm\src\hal_entry.c`**：
+本目录下的所有内容**完全独立于现有的 `vision/pi/` 和主线固件 `mcu/hal_entry.c`**：
 
 - 不修改任何现有文件
 - 新主程序 `pi/main_pickup.py` 独立入口，与 `vision/pi/main.py` 互不影响
@@ -41,7 +41,9 @@ pickup_v2/
 │       ├── test_kinematics.py   # FK/IK 交叉验证
 │       └── test_coord.py        # 坐标转换测试
 └── mcu/
-    └── hal_entry_pickup_v2.c    # MCU 端完整副本（不替换原文件）
+    ├── hal_entry_pickup_v2.c    # MCU 端完整副本（不替换原文件）
+    ├── tinyml_grasp.h           # TinyML 推理头文件（与主线 mcu/ 一致）
+    └── tinyml_weights.h         # TinyML 权重（train_tinyml.py 生成）
 ```
 
 ## 阶段执行清单（更新于 2026-05-11）
@@ -52,9 +54,11 @@ pickup_v2/
 | B | Python 端 IK + 单元测试 | FK(IK(p))≈p 误差<0.1mm | ✅ 完成（43/43 全过） |
 | C | hal_entry_pickup_v2.c | `K` 命令走指定关节角 | ✅ 完成 + 交叉审查修复 |
 | D | Pi-MCU 联调 | 像素→工作面→臂尖目测对齐 | ✅ Pi 代码就绪（85/85 测试） / ⏳ 待硬件联调 |
-| E | 实物抓取测试 | 9 网格点抓取成功率 | ⏳ 未开始 |
+| E | 实物抓取测试 | 9 网格点抓取成功率 | ⏳ 实验线持续推进中 |
 
-**进度与技术复盘：** [`NEXT_SESSION.md`](NEXT_SESSION.md)
+> 说明：主线「固定姿态序列分拣」（`mcu/hal_entry.c` + `vision/pi/`）已完整落地并参赛；pickup_v2 是赛后启动的实验性升级线。
+
+**技术复盘：** [`docs/串口调试复盘_2026-05-15.md`](docs/串口调试复盘_2026-05-15.md) ｜ [`docs/标定演进复盘_2026-06-03.md`](docs/标定演进复盘_2026-06-03.md)
 
 ## 入口文档
 

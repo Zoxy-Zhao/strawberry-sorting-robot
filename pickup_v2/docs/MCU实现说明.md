@@ -1,6 +1,6 @@
 # MCU 实现说明 — hal_entry_pickup_v2.c
 
-> 本文档说明新版 `mcu/hal_entry_pickup_v2.c` 与原 `D:\e2studio_test\Robotic_arm\src\hal_entry.c` 的差异和设计要点。**原文件不动**，新版作为完整副本独立存在，由你手动决定是否替换。
+> 本文档说明新版 `mcu/hal_entry_pickup_v2.c` 与原 `mcu/hal_entry.c` 的差异和设计要点。**原文件不动**，新版作为完整副本独立存在，由你手动决定是否替换。
 
 ## 1. 总体改动概览
 

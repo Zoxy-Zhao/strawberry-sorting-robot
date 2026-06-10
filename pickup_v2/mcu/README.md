@@ -1,16 +1,18 @@
 # mcu/ — MCU 端代码副本
 
-本目录存放新版 MCU 代码，**不会自动覆盖**原 `D:\e2studio_test\Robotic_arm\src\hal_entry.c`。
+本目录存放新版 MCU 代码，**不会自动覆盖**主线固件 `../../mcu/hal_entry.c`。
 
 ## 文件清单
 
 | 文件 | 说明 |
 |---|---|
 | `hal_entry_pickup_v2.c` | 完整副本 + pickup_v2 改动（1942 行）|
+| `tinyml_grasp.h` | TinyML 推理头文件（与主线 `mcu/` 一致）|
+| `tinyml_weights.h` | TinyML 权重（`vision/train_tinyml.py` 生成）|
 
 ## 与原文件的差异
 
-基于 `D:\e2studio_test\Robotic_arm\src\hal_entry.c`（1771 行）派生，新增：
+基于主线固件 `mcu/hal_entry.c`（1771 行）派生，新增：
 
 - 文件头注释（pickup_v2 标识）
 - `#include <stdlib.h>` (strtof / atoi)
@@ -32,7 +34,7 @@
 
 详见 `../docs/MCU实现说明.md` 第 5 节。快速版：
 
-1. **导入**：在 e2studio 把这个文件覆盖到 `D:\e2studio_test\Robotic_arm\src\hal_entry.c`（建议先备份原文件）
+1. **导入**：在 e2studio 把本目录文件覆盖到工程 `src/hal_entry.c`（建议先备份原文件）
 2. **编译**：Project → Build Project，期望 0 error
 3. **烧录**：
    ```bash

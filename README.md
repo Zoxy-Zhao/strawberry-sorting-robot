@@ -13,7 +13,7 @@
 - **眼（视觉）** — 树莓派 5 运行 YOLOv8n，实时检测草莓并三级分类（成熟/半成熟/未熟），mAP50 达 **98.8%**
 - **手（执行）** — 6自由度机械臂通过 PCA9685 驱动，插值缓动轨迹 + 安全过渡状态机
 - **力（触觉）** — FSR402B 薄膜压力传感器 200Hz 采样，自适应夹持力闭环控制
-- **TinyML** — RA6M5 Cortex-M33 上部署 INT8 量化 1D-CNN，实时分类抓取状态（稳定 / 滑脱风险）
+- **TinyML** — RA6M5 Cortex-M33 上部署 187 参数手写纯 C MLP（零库依赖、自实现前向传播），实时三分类抓取状态（稳定 / 滑脱风险 / 力量过大），单次推理 <1ms
 - **安全保护** — ADC 窗口比较器硬件中断，微秒级异常力响应保护
 
 ## 系统架构
@@ -30,8 +30,8 @@
 │                                                                  │
 │  FSR402B ─→ ADC 200Hz 采样 ─→ 力控 PID ─→ 夹爪力度调节             │
 │                    │                                             │
-│              TinyML 1D-CNN（INT8 量化）                            │
-│         压力时序数据 ─→ 抓取状态分类                                 │
+│              TinyML MLP（手写 C 前向传播）                          │
+│         压力时序数据 ─→ 抓取状态三分类                                │
 │                                                                  │
 │  ADC 窗口比较器 ─→ 硬件中断 ─→ 紧急释放                             │
 └──────────────────────────────────────────────────────────────────┘
@@ -133,15 +133,21 @@ strawberry_grasp/
 │   │   └── calibrate.py           #   摄像头-机械臂坐标标定
 │   ├── runs/strawberry_v12/       # 训练结果（曲线、指标）
 │   ├── train.py                   # PC 端训练脚本
-│   ├── train_tinyml.py            # TinyML 模型训练（1D-CNN 抓取状态分类）
+│   ├── train_tinyml.py            # TinyML 模型训练（MLP 抓取状态分类，导出 C 权重头文件）
 │   ├── data.yaml                  # YOLO 数据集配置
 │   └── merge_dataset.py           # 数据集合并工具
-├── output/                        # MCU 固件版本迭代（C 源码）
+├── mcu/                           # MCU 最终固件（e2studio 工程 src/）
+│   ├── hal_entry.c                #   主固件：状态机 + 力控 PID + TinyML + 急停
+│   ├── hal_warmstart.c            #   热启动辅助
+│   ├── tinyml_grasp.h             #   手写 C MLP 前向传播（零库依赖）
+│   └── tinyml_weights.h           #   train_tinyml.py 自动生成的权重
+├── output/                        # MCU 固件版本迭代历史（C 源码）
 │   ├── hal_entry_state_machine.c          # v1：基础状态机
 │   ├── hal_entry_state_machine_v2.c       # v2：插值缓动 + TRANSIT 安全过渡
 │   ├── hal_entry_state_machine_v3_gripper_split.c  # v3：夹爪分体控制
 │   ├── hal_entry_v4_wrist_rotate.c        # v4：腕部旋转
 │   ├── hal_entry_v5_fsr_debug.c           # v5：FSR 压力传感器集成
+│   ├── hal_entry_teach_mode.c             # 示教模式工具（姿态标定）
 │   └── hal_entry_with_uart.c              # UART 通信集成
 ├── docs/                          # 技术文档
 │   ├── 系统设计规格书.md
@@ -176,7 +182,7 @@ RA6M5 固件实现了稳健的抓取状态机：
 - **插值过渡** — 舵机运动通过线性插值实现平滑移动，防止机械冲击
 - **TRANSIT 安全状态** — 姿态切换时的强制过渡状态，验证路径安全
 - **力控 PID 闭环** — 200Hz 采样，根据成熟度等级自适应调节增益
-- **TinyML 推理** — INT8 量化 1D-CNN 对 50 个采样点的压力窗口分类，输出稳定/滑脱风险
+- **TinyML 推理** — 187 参数手写 C MLP（16→8→4→3）对 16 步 FSR 力时序窗口三分类（稳定/滑脱风险/力量过大），单次推理 <1ms
 - **硬件紧急保护** — ADC 窗口比较器触发硬件中断，微秒级响应，绕过软件延迟
 
 ## 舵机配置
@@ -210,7 +216,7 @@ python main.py
 
 ### MCU 端（控制）
 
-1. 用 Renesas e2studio 打开 `output/hal_entry_v5_fsr_debug.c`（最新固件）
+1. 用 Renesas e2studio 新建 RA6M5 工程，将 `mcu/` 下 4 个文件复制到工程 `src/` 目录
 2. 编译并通过 J-Link / PyOCD 烧录到 RA6M5
 3. 连接 UART（SCI9: TX=P109, RX=P110）到树莓派的 `/dev/serial0`
 

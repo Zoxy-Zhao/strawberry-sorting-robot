@@ -25,8 +25,8 @@
 
 ## 下位机工程
 
-- [ ] `D:\e2studio_test` 工作区可正常打开
-- [ ] `D:\e2studio_test\UART` 工程可正常编译
+- [ ] `e2studio 工作区` 工作区可正常打开
+- [ ] `e2studio 工程 UART` 工程可正常编译
 - [ ] UART 日志正常输出
 - [ ] KEY 中断正常
 - [ ] 驱动板控制模块已接入
