@@ -27,12 +27,12 @@ python capture_pi.py chessboard --pattern 9x6 --out outputs/intrinsic_images
 ```bash
 # 在 PC PowerShell（你的 Windows）
 scp -r pi@<Pi_IP>:~/vs_code/strawberry_grasp/pickup_v2/calibration/outputs/intrinsic_images `
-    D:\VS_code\projects\strawberry_grasp\pickup_v2\calibration\outputs\
+    <本地仓库路径>\pickup_v2\calibration\outputs\
 ```
 
 **PC 端（计算）：**
 ```bash
-cd D:\VS_code\projects\strawberry_grasp\pickup_v2\calibration
+cd <本地仓库路径>\pickup_v2\calibration
 python intrinsic_calib.py compute `
     --src outputs/intrinsic_images `
     --pattern 9x6 --square 25 `
@@ -61,7 +61,7 @@ python capture_pi.py workplane --out outputs/workplane.png
 **传回 PC：**
 ```bash
 scp pi@<Pi_IP>:~/vs_code/strawberry_grasp/pickup_v2/calibration/outputs/workplane.png `
-    D:\VS_code\projects\strawberry_grasp\pickup_v2\calibration\outputs\
+    <本地仓库路径>\pickup_v2\calibration\outputs\
 ```
 
 **PC 端（打点 + 拟合）：**

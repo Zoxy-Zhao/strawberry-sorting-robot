@@ -1,9 +1,10 @@
 """
 合并多来源草莓数据集为单个 YOLO 数据集（train/val 划分）
 
-用法:
-  python merge_dataset.py --preview
-  python merge_dataset.py
+用法（路径按自己的数据位置填写）:
+  python merge_dataset.py --field-src <田间精选目录> --bright-img <强光图片目录> \
+      --bright-lbl <强光标签目录> --dim-img <弱光图片目录> --dim-lbl <弱光标签目录> \
+      --output <输出目录> --preview
 """
 
 import argparse
@@ -27,14 +28,18 @@ DIM_MAP = {
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="合并多个数据源为 YOLO train/val 数据集")
-    parser.add_argument("--field-src", type=Path, default=Path("D:/田间精选"), help="田间精选根目录")
-    parser.add_argument("--bright-img", type=Path, default=Path("D:/草莓/强光"), help="强光图片根目录")
-    parser.add_argument("--bright-lbl", type=Path, default=Path("D:/草莓/强光label"), help="强光标签根目录")
-    parser.add_argument("--dim-img", type=Path, default=Path("D:/草莓/草莓/草莓/dataset_clean"), help="弱光图片根目录")
-    parser.add_argument("--dim-lbl", type=Path, default=Path("D:/草莓/草莓/草莓/label"), help="弱光标签根目录")
-    parser.add_argument("--output", type=Path, default=Path("D:/草莓_merged"), help="输出目录")
-    parser.add_argument("--val-ratio", type=float, default=0.15, help="验证集比例，默认 0.15")
+    parser = argparse.ArgumentParser(
+        description="合并多个数据源为 YOLO train/val 数据集"
+    )
+    parser.add_argument("--field-src", type=Path, required=True, help="田间精选根目录")
+    parser.add_argument("--bright-img", type=Path, required=True, help="强光图片根目录")
+    parser.add_argument("--bright-lbl", type=Path, required=True, help="强光标签根目录")
+    parser.add_argument("--dim-img", type=Path, required=True, help="弱光图片根目录")
+    parser.add_argument("--dim-lbl", type=Path, required=True, help="弱光标签根目录")
+    parser.add_argument("--output", type=Path, required=True, help="输出目录")
+    parser.add_argument(
+        "--val-ratio", type=float, default=0.15, help="验证集比例，默认 0.15"
+    )
     parser.add_argument("--seed", type=int, default=42, help="随机种子，默认 42")
     parser.add_argument("--preview", action="store_true", help="仅预览，不复制文件")
     return parser.parse_args()
@@ -69,7 +74,12 @@ def collect_field(src: Path):
         return []
     pairs = []
     for image_path in sorted(img_dir.glob("*.jpg")):
-        add_pair(pairs, image_path, lbl_dir / f"{image_path.stem}.txt", f"field_{image_path.stem}")
+        add_pair(
+            pairs,
+            image_path,
+            lbl_dir / f"{image_path.stem}.txt",
+            f"field_{image_path.stem}",
+        )
     return pairs
 
 
@@ -138,7 +148,9 @@ def main():
         print("当前为预览模式：只统计，不复制文件。\n")
 
     field_pairs = collect_field(args.field_src)
-    bright_pairs = collect_grouped(args.bright_img, args.bright_lbl, BRIGHT_MAP, "bright_")
+    bright_pairs = collect_grouped(
+        args.bright_img, args.bright_lbl, BRIGHT_MAP, "bright_"
+    )
     dim_pairs = collect_grouped(args.dim_img, args.dim_lbl, DIM_MAP, "dim_")
     pairs = field_pairs + bright_pairs + dim_pairs
 

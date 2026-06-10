@@ -17,7 +17,7 @@
 ### 1.1 采集棋盘格图像
 
 ```bash
-cd D:\VS_code\projects\strawberry_grasp\pickup_v2\calibration
+cd <本地仓库路径>\pickup_v2\calibration
 python intrinsic_calib.py capture --camera 0 --pattern 9x6 \
        --out outputs/intrinsic_images
 ```

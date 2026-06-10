@@ -3,8 +3,8 @@
 从已标注的 YOLO 数据集中按主类别随机抽样指定数量的图片+标签
 
 用法:
-  python sample_field_data.py --src "D:/草莓dataset" --output "D:/田间精选" --preview
-  python sample_field_data.py --src "D:/草莓dataset" --output "D:/田间精选" --ripe-count 70 --semi-count 50 --unripe-count 0
+  python sample_field_data.py --src <已标注数据集目录> --output <输出目录> --preview
+  python sample_field_data.py --src <已标注数据集目录> --output <输出目录> --ripe-count 70 --semi-count 50 --unripe-count 0
 """
 
 import argparse

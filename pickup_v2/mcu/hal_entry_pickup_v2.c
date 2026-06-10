@@ -7,7 +7,7 @@
  *    - STATE_PICKUP_IDLE / STATE_PICKUP_MOVE 状态
  *    - 兼容旧单字符协议 A/B/C/G/X
  *
- *  原文件 D:\e2studio_test\Robotic_arm\src\hal_entry.c 不变。
+ *  原文件（e2studio 工程 src/hal_entry.c，即仓库 mcu/hal_entry.c）不变。
  *  使用：先在 e2studio 编译验证；通过后用本文件覆盖原 hal_entry.c。
  *  详见 ../docs/MCU实现说明.md
  * ============================================================ */

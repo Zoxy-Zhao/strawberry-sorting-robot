@@ -3,8 +3,8 @@
 在 Windows PC 上运行
 
 用法:
-  python preprocess_dataset.py --input D:/草莓2/dataset_captured --output D:/草莓2/dataset_clean --preview
-  python preprocess_dataset.py --input D:/草莓2/dataset_captured --output D:/草莓2/dataset_clean
+  python preprocess_dataset.py --input <原始图片目录> --output <输出目录> --preview
+  python preprocess_dataset.py --input <原始图片目录> --output <输出目录>
 """
 
 import argparse
@@ -19,10 +19,14 @@ EXTRA_DIRS = {"多个": "mixed"}
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="草莓数据集预处理：模糊过滤 + 统一重命名")
+    parser = argparse.ArgumentParser(
+        description="草莓数据集预处理：模糊过滤 + 统一重命名"
+    )
     parser.add_argument("--input", required=True, type=Path, help="输入根目录")
     parser.add_argument("--output", required=True, type=Path, help="输出根目录")
-    parser.add_argument("--blur-threshold", type=float, default=50.0, help="模糊阈值，默认 50")
+    parser.add_argument(
+        "--blur-threshold", type=float, default=50.0, help="模糊阈值，默认 50"
+    )
     parser.add_argument("--preview", action="store_true", help="仅预览统计，不复制文件")
     return parser.parse_args()
 
@@ -39,7 +43,9 @@ def hist_lines(scores, bins=8, width=24):
         return ["  无数据"]
     low, high = min(scores), max(scores)
     if low == high:
-        return [f"  {low:7.2f}-{high:7.2f} | {'#' * min(len(scores), width)} ({len(scores)})"]
+        return [
+            f"  {low:7.2f}-{high:7.2f} | {'#' * min(len(scores), width)} ({len(scores)})"
+        ]
     step = (high - low) / bins
     counts = [0] * bins
     for score in scores:
@@ -57,7 +63,9 @@ def hist_lines(scores, bins=8, width=24):
 
 def collect_images(class_dir: Path):
     items = []
-    images = sorted(p for p in class_dir.iterdir() if p.is_file() and p.suffix.lower() == ".jpg")
+    images = sorted(
+        p for p in class_dir.iterdir() if p.is_file() and p.suffix.lower() == ".jpg"
+    )
     for image_path in images:
         try:
             items.append((image_path, blur_score(image_path)))
@@ -73,7 +81,9 @@ def print_class_report(cls, items, threshold, preview):
     print(f"\n[{cls}] 原始数量: {len(items)}")
     if scores:
         mean_score = sum(scores) / len(scores)
-        print(f"  模糊分数统计: 最小={min(scores):.2f}  最大={max(scores):.2f}  均值={mean_score:.2f}")
+        print(
+            f"  模糊分数统计: 最小={min(scores):.2f}  最大={max(scores):.2f}  均值={mean_score:.2f}"
+        )
         print("  分数直方图:")
         for line in hist_lines(scores):
             print(line)
@@ -122,7 +132,9 @@ def main():
             items = []
         else:
             items = collect_images(class_dir)
-        before, removed, after, kept = print_class_report(dst_name, items, args.blur_threshold, args.preview)
+        before, removed, after, kept = print_class_report(
+            dst_name, items, args.blur_threshold, args.preview
+        )
         summary[dst_name] = (before, removed, after)
         kept_map[dst_name] = kept
 
